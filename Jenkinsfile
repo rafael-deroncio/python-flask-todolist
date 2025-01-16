@@ -4,7 +4,7 @@ pipeline {
     environment {
         APP_DIR = "/home/ubuntu/app-flask"
         VENV_DIR = "${APP_DIR}/env"
-        GIT_REPO = "git@github.com:seu_usuario/seu_repositorio.git"
+        GIT_REPO = "git@github.com:rafael-deroncio/python-flask-todolist.git"
         SERVICE_NAME = "appflask"
     }
 
