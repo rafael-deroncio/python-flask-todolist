@@ -1,30 +1,57 @@
-# Jenkinsfile
 pipeline {
     agent any
 
+    environment {
+        APP_DIR = "/home/ubuntu/app-flask"
+        VENV_DIR = "${APP_DIR}/env"
+        GIT_REPO = "git@github.com:seu_usuario/seu_repositorio.git"
+        SERVICE_NAME = "appflask"
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Clonar Repositório') {
             steps {
-                checkout scm
+                git url: "${GIT_REPO}", branch: 'main'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Instalar Dependências') {
             steps {
-                sh 'pip install -r requirements.txt'
+                script {
+                    sh """
+                        sudo source ${VENV_DIR}/bin/activate
+                        pip install -r ${APP_DIR}/requirements.txt
+                    """
+                }
             }
         }
 
-        stage('Run Tests') {
+        stage('Iniciar Testes') {
             steps {
-                echo 'No tests implemented yet.'
+                sh """
+                    pytest ${APP_DIR}/tests.py
+                """
             }
         }
 
-        stage('Build & Run') {
+        stage('Reiniciar Serviço') {
             steps {
-                sh 'python3 app.py &'
+                script {
+                    sh """
+                        sudo systemctl restart ${SERVICE_NAME}
+                    """
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline executado com sucesso!'
+        }
+
+        failure {
+            echo 'Pipeline falhou!'
         }
     }
 }
