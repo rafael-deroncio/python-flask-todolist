@@ -1,13 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        APP_DIR = "/home/ubuntu/app-flask"
-        VENV_DIR = "${APP_DIR}/env"
-        GIT_REPO = "git@github.com:rafael-deroncio/python-flask-todolist.git"
-        SERVICE_NAME = "appflask"
-    }
-
     stages {
         stage('Clonar Repositório') {
             steps {
@@ -15,35 +8,35 @@ pipeline {
             }
         }
 
-        stage('Instalar Dependências') {
-            steps {
-                script {
-                    sh """
-                        sudo source ${VENV_DIR}/bin/activate
-                        pip install -r ${APP_DIR}/requirements.txt
-                    """
-                }
-            }
-        }
+    //     stage('Instalar Dependências') {
+    //         steps {
+    //             script {
+    //                 sh """
+    //                     sudo source ${VENV_DIR}/bin/activate
+    //                     pip install -r ${APP_DIR}/requirements.txt
+    //                 """
+    //             }
+    //         }
+    //     }
 
-        stage('Iniciar Testes') {
-            steps {
-                sh """
-                    pytest ${APP_DIR}/tests.py
-                """
-            }
-        }
+    //     stage('Iniciar Testes') {
+    //         steps {
+    //             sh """
+    //                 pytest ${APP_DIR}/tests.py
+    //             """
+    //         }
+    //     }
 
-        stage('Reiniciar Serviço') {
-            steps {
-                script {
-                    sh """
-                        sudo systemctl restart ${SERVICE_NAME}
-                    """
-                }
-            }
-        }
-    }
+    //     stage('Reiniciar Serviço') {
+    //         steps {
+    //             script {
+    //                 sh """
+    //                     sudo systemctl restart ${SERVICE_NAME}
+    //                 """
+    //             }
+    //         }
+    //     }
+    // }
 
     post {
         success {
