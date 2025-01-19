@@ -3,16 +3,10 @@ pipeline {
 
     stages {
         stage("Teste 1") {
-            step("step 1") {
-                echo 'Pipeline OK'
-            }
-
-            step("step 2") {
-                echo 'Pipeline OK'
-            }
-
-            step("step 3") {
-                echo 'Pipeline OK'
+            steps {
+                echo 'Step 1: Pipeline OK'
+                echo 'Step 2: Pipeline OK'
+                echo 'Step 3: Pipeline OK'
             }
         }
     }
