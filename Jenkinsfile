@@ -1,15 +1,31 @@
 pipeline {
     agent any
 
+    environment {
+        SERVICE_NAME = "appflask"
+    }
+
     stages {
-        stage("Teste 1") {
+
+        stage('Instalar Dependências') {
             steps {
-                echo 'Step 1: Pipeline OK'
-                echo 'Step 2: Pipeline OK'
-                echo 'Step 3: Pipeline OK'
+                echo 'Instalar dependências'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                echo 'Rodar testes'
+            }
+        }
+
+        stage('Reiniciar Serviço') {
+            steps {
+                echo 'Reiniciar o service'
             }
         }
     }
+
 
     post {
         success {
